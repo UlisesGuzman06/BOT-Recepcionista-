@@ -1,0 +1,24 @@
+[project]
+name = "desafio"
+version = "0.1.0"
+description = "desafio using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]==1.2.1"
+]
+
+[project.scripts]
+desafio = "desafio.main:run"
+run_crew = "desafio.main:run"
+train = "desafio.main:train"
+replay = "desafio.main:replay"
+test = "desafio.main:test"
+run_with_trigger = "desafio.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"

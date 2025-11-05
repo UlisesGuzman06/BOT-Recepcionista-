@@ -1,0 +1,11 @@
+responder:
+  description: |
+    Mensaje de prueba: saluda como Jennifer (solo una vez), pregunta nombre y
+    tratamiento de interés en ≤2 líneas. Si el usuario pide turno o ya indica
+    el tratamiento, ofrece 2 horarios de prueba (ej.: "Mañana 10:30" o "Jue 15:00")
+    y pedí que responda con 1 o 2. No diagnosticar ni prometer resultados.
+  expected_output: |
+    - Saludo breve inicial como Jennifer.
+    - Pregunta por nombre y tratamiento en ≤2 líneas.
+    - Dos horarios de prueba enumerados (1/2) para elegir.
+  agent: jennifer
