@@ -1,11 +1,18 @@
+transcribir_audio:
+  description: >
+    Si hay un audio en la URL "{audio_url}", devolvé una transcripción simulada (modo MOCK).
+    Si no hay audio_url, devolvé exactamente el mensaje original: "{incoming_text}".
+    Entrega SOLO el texto transcrito o el original, sin comentarios extra.
+  expected_output: >
+    Solo el texto limpio del usuario (una línea).
+  agent: transcriptor
+
 responder:
-  description: |
-    Mensaje de prueba: saluda como Jennifer (solo una vez), pregunta nombre y
-    tratamiento de interés en ≤2 líneas. Si el usuario pide turno o ya indica
-    el tratamiento, ofrece 2 horarios de prueba (ej.: "Mañana 10:30" o "Jue 15:00")
-    y pedí que responda con 1 o 2. No diagnosticar ni prometer resultados.
-  expected_output: |
-    - Saludo breve inicial como Jennifer.
-    - Pregunta por nombre y tratamiento en ≤2 líneas.
-    - Dos horarios de prueba enumerados (1/2) para elegir.
+  description: >
+    Con el texto "{texto_limpio}", responde de forma breve y amable.
+    Si la persona pide un turno, podés usar CalendarSchedulerTool para consultar
+    disponibilidad (action="find") y tomar el primer horario disponible.
+    Si no la usás, ofrecé el horario sugerido "{slot_sugerido}" y pedí confirmación con "SI".
+  expected_output: >
+    1–2 líneas claras, en tono cordial, listas para WhatsApp.
   agent: jennifer
