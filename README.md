@@ -1,54 +1,126 @@
-# Desafio Crew
+# 🤖 Proyecto CrewAI – Jennifer (Recepcionista WhatsApp)
 
-Welcome to the Desafio Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+Este proyecto implementa una **IA tipo agente CrewAI** que actúa como recepcionista virtual ("Jennifer") para Houston Aesthetics, recibiendo y respondiendo mensajes de WhatsApp mediante **Twilio**, con soporte para texto, audios (mock) y simulación de agenda.
 
-## Installation
+---
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+## 🧩 Estructura del Proyecto
 
-First, if you haven't already, install uv:
-
-```bash
-pip install uv
+```
+DESAFIO/
+│
+├── src/
+│   └── desafio/
+│       ├── main.py
+│       ├── crew.py
+│       └── tools/
+│           ├── TwilioReceiverTool.py
+│           ├── TwilioSenderTool.py
+│           ├── TranscribeAudioTool.py
+│           └── CalendarSchedulerTool.py
+│
+├── config/
+│   ├── agents.yaml
+│   └── tasks.yaml
+│
+├── .env
+└── README.md
 ```
 
-Next, navigate to your project directory and install the dependencies:
+---
 
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
+## ⚙️ Instalación
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
-- Modify `src/desafio/config/agents.yaml` to define your agents
-- Modify `src/desafio/config/tasks.yaml` to define your tasks
-- Modify `src/desafio/crew.py` to add your own logic, tools and specific args
-- Modify `src/desafio/main.py` to add custom inputs for your agents and tasks
-
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+1. **Clonar o descargar** este proyecto.
+2. Crear entorno virtual (recomendado con Python 3.13 o 3.12):
 
 ```bash
-$ crewai run
+python -m venv .venv
+.\.venv\Scriptsctivate
 ```
 
-This command initializes the desafio Crew, assembling the agents and assigning them tasks as defined in your configuration.
+## 🔐 Variables de Entorno (.env)
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+Crea un archivo llamado `.env` en la raíz del proyecto y completalo así:
 
-## Understanding Your Crew
+```bash
+# === OpenAI / CrewAI ===
+OPENAI_API_KEY=tu_api_key_aqui
+MODEL=gpt-4o-mini
 
-The desafio Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+# === Twilio WhatsApp ===
+TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
+TWILIO_WHATSAPP_FROM=whatsapp:+549XXXXXXXXXX
 
-## Support
+# === Ngrok (opcional) ===
+NGROK_AUTHTOKEN=tu_token_ngrok
+```
 
-For support, questions, or feedback regarding the Desafio Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+---
 
-Let's create wonders together with the power and simplicity of crewAI.
+## 🚀 Ejecución del Servidor Flask
+
+Desde la carpeta raíz:
+
+```bash
+python -m src.desafio.main
+```
+
+Esto levantará un servidor Flask local en:
+
+```
+http://localhost:3500/webhooks/twilio/whatsapp
+```
+
+---
+
+## 🌍 Conectar con Twilio usando Ngrok
+
+1. Iniciar túnel:
+   ```bash
+   ngrok http 3500
+   ```
+2. Copiar la URL generada (ejemplo):
+   ```
+   https://4b3f-181-28-210-14.ngrok-free.app
+   ```
+3. En tu consola de **Twilio → Sandbox WhatsApp**, pegala en:
+   ```
+   WHEN A MESSAGE COMES IN:
+   https://4b3f-181-28-210-14.ngrok-free.app/webhooks/twilio/whatsapp
+   ```
+4. Guardar cambios ✅
+
+---
+
+## 💬 Probar Jennifer
+
+Desde tu WhatsApp, escribí al **número del sandbox** (por ejemplo, +1 415 523 8886).
+
+Mensajes de prueba:
+- “Hola Jennifer”
+- “Quiero un turno mañana”
+- “audio_transcrito Hola quiero saber precios”
+- “Necesito un facial”
+
+Jennifer te responderá automáticamente usando la lógica definida en `agents.yaml` y `tasks.yaml`.
+
+---
+
+## 🧠 Componentes Simulados
+
+| Tool | Tipo | Descripción |
+|------|------|-------------|
+| `TwilioReceiverTool` | Real | Webhook Flask para recibir mensajes de Twilio |
+| `TwilioSenderTool` | Real | Envía respuestas de WhatsApp usando Twilio API |
+| `TranscribeAudioTool` | Mock | Simula transcripción de audio |
+| `CalendarSchedulerTool` | Mock | Devuelve fechas y horas simuladas disponibles |
+
+---
+## 🧾 Licencia y Créditos
+
+Desafío de agentes CrewAI 2025  
+Autor: **Ulises Guzmán**  
+
